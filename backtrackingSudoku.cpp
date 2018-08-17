@@ -8,7 +8,6 @@ int sudoku[9][9];
 public:
     void createBoard();
     int isComplete();
-    void fillPositions();
     void printBoard();
     void printHorizontal();
     bool checkRow(int, int);
@@ -118,7 +117,7 @@ bool Sudoku :: solve() {
     if((m = isComplete()) == -1) {
         return true;
     } else {
-        n = m % 10;
+        n = m % 10;     // m and n contain the index of the blank element for which values are substituted
         m = m / 10;
     }
     for(int i = 1; i < 10; i++) {
@@ -127,7 +126,7 @@ bool Sudoku :: solve() {
             if(solve()) {
                 return true;
             } 
-            sudoku[m][n] = 0;   
+            sudoku[m][n] = 0;       // If the substituted value of i does not work out   
         }
     }
     return false;
@@ -136,9 +135,10 @@ bool Sudoku :: solve() {
 int main() {
     Sudoku s;
     s.createBoard();
-    s.solve();
-    s.printBoard();
-
+    if(s.solve())
+        s.printBoard();
+    else
+        cout<<"Solution not found0"<<endl;
     return 0;
 }
 
